@@ -5,24 +5,27 @@ class Node:
         self.filhos = []
 
     def insert(self, raiz, dado, tamanho):
-        if raiz.dado is None:
+        if raiz is None:
+            raiz = Node(dado, tamanho)
+            return True
+        elif raiz.dado is None:
             raiz.dado = dado
             raiz.tamanho = tamanho
+            return True
         else:
             if len(raiz.filhos) < raiz.tamanho:
                 raiz.filhos.append(Node(dado, tamanho))
+                return True
             else:
                 for i in raiz.filhos:
-                    if len(i.filhos) < i.tamanho:
-                        self.insert(i, dado, tamanho)
-                        break
-                    else:
-                        continue
+                    if self.insert(i, dado, tamanho):
+                        return True
+        return False
 
     def mostra(self, raiz, alt=0):
         if raiz.dado is not None:
             print(alt * '__', end='')
-            print(raiz)
+            print(raiz.dado)
             for i in raiz.filhos:
                 self.mostra(i, alt+1)
 
